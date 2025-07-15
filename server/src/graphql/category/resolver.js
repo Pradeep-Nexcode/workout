@@ -13,41 +13,41 @@ const categoryResolvers = {
   Upload: GraphQLUpload,
 
   Query: {
-    getAllCategories: () =>
-      tryCatch(async () => {
-        const data = await getAllCategoriesService();
-        return successResponse("Categories fetched successfully", data);
-      }),
+    getAllCategories: tryCatch(async () => {
+      const data = await getAllCategoriesService();
 
-    getCategoryById: (_, { id }) =>
-      tryCatch(async () => {
-        const data = await getCategoryByIdService(id);
-        if (!data) throw new Error("Category not found.");
-        return successResponse("Category fetched successfully", data);
-      }),
+      console.log(data);
+
+      return successResponse("Categories fetched successfully", data);
+    }),
+
+    getCategoryById: tryCatch(async (_, { id }) => {
+      const data = await getCategoryByIdService(id);
+      if (!data) throw new Error("Category not found.");
+      return successResponse("Category fetched successfully", data);
+    }),
   },
 
   Mutation: {
-    createCategory: (_, { input }) =>
-      tryCatch(async () => {
-        const data = await createCategoryService(input);
-        return successResponse("Category created successfully", data);
-      }),
+    createCategory: tryCatch(async (_, { input }, context) => {
+      console.log("Creating category, input:", input);
+      const data = await createCategoryService(input, context.req);
+      console.log("Created category data:", data);
+      return successResponse("Category created successfully", data);
+    }),
 
-    updateCategory: (_, { id, input }) =>
-      tryCatch(async () => {
-        const data = await updateCategoryService(id, input);
-        return successResponse("Category updated successfully", data);
-      }),
+    updateCategory: tryCatch(async (_, { id, input }, context) => {
+      const data = await updateCategoryService(id, input, context.req);
+      return successResponse("Category updated successfully", data);
+    }),
 
-    deleteCategory: (_, { id }) =>
-      tryCatch(async () => {
-        const success = await deleteCategoryService(id);
-        return {
-          success,
-          message: success ? "Category deleted" : "Delete failed",
-        };
-      }),
+    deleteCategory: tryCatch(async (_, { id }) => {
+      const success = await deleteCategoryService(id);
+      return {
+        success,
+        message: success ? "Category deleted" : "Delete failed",
+      };
+    }),
   },
 };
 

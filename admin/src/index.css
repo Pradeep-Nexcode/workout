@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+*{
+  font-family: "Poppins", serif;
+}
+.heading {
+  @apply text-4xl font-bold;
+}
+.sub-heading {
+  @apply text-3xl;
+}
+
+.content {
+  @apply text-2xl;
+}
+
+.myDark {
+  @apply text-[#16423C] dark:text-[#16423C]
+}
+
+.sidebarBg {
+  @apply  bg-[#16423C] dark:bg-[#1A1D21];
+}
+
+.headerBg {
+  @apply bg-[#16423C] dark:bg-[#16423C];
+}
+.headericons {
+  @apply p-2 text-white hover:bg-[#16423C] dark:hover:bg-gray-700  dark:text-white rounded-full text-2xl;
+}
+
+.btn{
+  @apply px-4 py-2 text-sm rounded-sm bg-[#16423C] dark:bg-[#16423C] text-white dark:text-white hover:bg-[#16423C] dark:hover:bg-[#16423C] hover:text-white dark:hover:text-white;
+}
+.btnOutline{
+  @apply px-4 py-2 text-sm rounded-sm  border-2 border-transparent hover:border-[#16423C] dark:border-[#16423C] text-[#16423C] dark:text-[#16423C]  cursor-pointer select-none;
+}
+
+ 
+.myScrollHidden::-webkit-scrollbar {
+  width: 0px; /* Width of the scrollbar */
+  height: 0px; /* Height for horizontal scrollbar */
+}
+
+/* Apply globally to all scrollbars */
+.myScroll {
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: #16423C #e0e0e0; /* Thumb color and track color */
+}
+
+/* Webkit-based browsers (Chrome, Edge, Safari) */
+.myScroll::-webkit-scrollbar {
+  width: 4px; /* Width of the scrollbar */
+  height: 4px; /* Height for horizontal scrollbar */
+}
+
+.myScroll::-webkit-scrollbar-track {
+  background: #e0e0e0; /* Track color */
+  border-radius: 4px; /* Rounded corners for the track */
+}
+
+.myScroll::-webkit-scrollbar-thumb {
+  background-color: #4caf50; /* Scrollbar thumb color */
+  border-radius: 8px; /* Rounded corners for the thumb */
+  border: 2px solid #e0e0e0; /* Space around the thumb for contrast */
+}
+
+.myScroll::-webkit-scrollbar-thumb:hover {
+  background-color: #388e3c; /* Darker green when hovered */
+}
+
+.myScroll::-webkit-scrollbar-corner {
+  background: transparent; /* Corner where horizontal and vertical scrollbars meet */
+}
+ 

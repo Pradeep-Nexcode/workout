@@ -28,11 +28,11 @@ const categoryTypeDefs = `
   }
 
   input CreateCategoryInput {
-    name: String!
-    slug: String!
-    description: String!
+    name: String
+    slug: String
+    description: String
     isActive: Boolean
-    images: [CategoryImageInput!]
+    images: [CategoryImageInput]
   }
 
   input UpdateCategoryInput {
@@ -40,24 +40,24 @@ const categoryTypeDefs = `
     slug: String
     description: String
     isActive: Boolean
-    images: [CategoryImageInput!]
+    images: [CategoryImageInput]
   }
 
   type CategoryResponse {
-  success: Boolean!
-  message: String!
+  success: Boolean
+  message: String
   data: Category
 }
 
 type CategoryListResponse {
-  success: Boolean!
+  success: Boolean
   message: String!
   data: [Category!]
 }
 
 
   type Mutation {
-  createCategory(input: CreateCategoryInput!): CategoryResponse!
+  createCategory( input: CreateCategoryInput): CategoryResponse!
   updateCategory(id: ID!, input: UpdateCategoryInput!): CategoryResponse!
   deleteCategory(id: ID!): CategoryResponse!
 }

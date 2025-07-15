@@ -9,7 +9,9 @@ import {
   categoryUpdateSchema,
 } from "../utils/validations/category.validation.js";
 
-export const createCategoryService = async (input) => {
+export const createCategoryService = async (input, req) => {
+  console.log(input)
+
   categoryCreateSchema.parse(input);
 
   const exists = await Category.findOne({ slug: input.slug });
@@ -31,7 +33,7 @@ export const createCategoryService = async (input) => {
   return saved;
 };
 
-export const updateCategoryService = async (id, input) => {
+export const updateCategoryService = async (id, input, req) => {
   categoryUpdateSchema.parse(input);
   const existingCategory = await Category.findById(id);
   if (!existingCategory) throw new Error("Category not found.");
@@ -55,6 +57,8 @@ export const updateCategoryService = async (id, input) => {
       "categories",
       image.file
     );
+
+    console.log(filePath)
     if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
   }
 
@@ -73,6 +77,7 @@ export const updateCategoryService = async (id, input) => {
       altText: img.altText || uploaded.altText,
     });
   }
+  console.log(updatedImages, 'updatedImages')
 
   const updated = await Category.findByIdAndUpdate(
     id,

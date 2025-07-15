@@ -104,6 +104,8 @@ const apolloServer = new ApolloServer({
   },
 });
 
+
+console.log('test')
 await apolloServer.start();
 apolloServer.applyMiddleware({ app, cors: false }); // Disable Apollo's CORS handling
 

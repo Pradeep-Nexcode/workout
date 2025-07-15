@@ -24,7 +24,7 @@ const handleImageUpload = async (file, uploadDir, baseUrl) => {
   await finished(out);
 
   return {
-    url: `${baseUrl}/uploads/categories/${uniqueName}`,
+    url: `${baseUrl}/src/uploads/categories/${uniqueName}`,
     file: uniqueName,
     altText: filename.replace(/\.[^/.]+$/, ""), // Remove extension for alt
   };
