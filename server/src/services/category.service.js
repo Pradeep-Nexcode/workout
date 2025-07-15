@@ -10,8 +10,6 @@ import {
 } from "../utils/validations/category.validation.js";
 
 export const createCategoryService = async (input, req) => {
-  console.log(input)
-
   categoryCreateSchema.parse(input);
 
   const exists = await Category.findOne({ slug: input.slug });
@@ -58,7 +56,7 @@ export const updateCategoryService = async (id, input, req) => {
       image.file
     );
 
-    console.log(filePath)
+    console.log(filePath);
     if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
   }
 
@@ -77,7 +75,6 @@ export const updateCategoryService = async (id, input, req) => {
       altText: img.altText || uploaded.altText,
     });
   }
-  console.log(updatedImages, 'updatedImages')
 
   const updated = await Category.findByIdAndUpdate(
     id,
