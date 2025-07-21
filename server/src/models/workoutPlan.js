@@ -70,6 +70,7 @@ const workoutPlanSchema = new mongoose.Schema(
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "AdminUser",
+      required: false
     },
   },
   { timestamps: true }

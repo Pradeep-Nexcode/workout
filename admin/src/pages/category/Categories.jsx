@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCategories } from '../../services/category/CategoryAction';
+import { deleteCategory, fetchCategories } from '../../services/category/CategoryAction';
 import { Link } from 'react-router-dom';
 
 const Categories = () => {
@@ -10,6 +10,11 @@ const Categories = () => {
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
+
+
+  const handleDelete = (categoryId) => {
+    dispatch(deleteCategory(categoryId));
+  };
 
   return (
     <div className="p-6">
@@ -34,7 +39,7 @@ const Categories = () => {
                 <Link to={`/categories/${category._id}`} className="px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600">
                   Edit
                 </Link>
-                <button className="px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600">
+                <button onClick={() => handleDelete(category._id)} className="px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600">
                   Delete
                 </button>
               </div>

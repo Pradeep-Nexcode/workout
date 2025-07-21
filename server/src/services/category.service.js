@@ -22,7 +22,8 @@ export const createCategoryService = async (input, req) => {
     const uploaded = await handleImageUpload(
       file,
       path.join(process.cwd(), "src", "uploads", "categories"),
-      BASE_URL
+      BASE_URL,
+      "categories"
     );
     images.push({ ...uploaded, type: img.type });
   }
@@ -39,15 +40,23 @@ export const updateCategoryService = async (id, input, req) => {
   const BASE_URL = getBaseUrl(req);
   const oldImages = existingCategory.images || [];
 
+  console.log(oldImages, "oldImages");
+
   const incomingExisting = input.images?.filter((img) => img.url) || [];
+
+  console.log(incomingExisting, "incomingExisting");
+
   const incomingNew = input.images?.filter((img) => img.file) || [];
 
+  console.log(input, "input");
   // Images to delete
   const imagesToDelete = oldImages.filter((oldImg) => {
     return !incomingExisting.some((inImg) => inImg.url === oldImg.url);
   });
 
   for (const image of imagesToDelete) {
+    if (!image.file) continue; // Skip if no file name
+
     const filePath = path.join(
       process.cwd(),
       "src",
@@ -56,7 +65,7 @@ export const updateCategoryService = async (id, input, req) => {
       image.file
     );
 
-    console.log(filePath);
+    console.log("Deleting:", filePath);
     if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
   }
 
@@ -67,7 +76,9 @@ export const updateCategoryService = async (id, input, req) => {
     const uploaded = await handleImageUpload(
       file,
       path.join(process.cwd(), "src", "uploads", "categories"),
-      BASE_URL
+      BASE_URL,
+      "categories"
+
     );
     updatedImages.push({
       ...uploaded,
@@ -90,14 +101,19 @@ export const deleteCategoryService = async (id) => {
   if (!existing) throw new Error("Category not found.");
 
   // Delete associated image files
-  for (const img of existing.images || []) {
+
+  for (const image of existing.images) {
+    if (!image.file) continue; // Skip if no file name
+
     const filePath = path.join(
       process.cwd(),
       "src",
       "uploads",
       "categories",
-      img.file
+      image.file
     );
+
+    console.log("Deleting:", filePath);
     if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
   }
 

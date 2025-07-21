@@ -5,24 +5,25 @@ import Exercise from "../models/exercise.js";
 
 import handleImageUpload from "./../utils/functions/handleImageUpload.js";
 import getBaseUrl from "./../utils/config.js";
-import { exerciseCreateSchema } from "./../utils/validations/exercise.validation.js";
+import { exerciseCreateSchema, exerciseUpdateSchema } from "./../utils/validations/exercise.validation.js";
 
 export const getAllExercisesService = async () => {
-  const data = await Exercise.find({ isActive: true });
+  const data = await Exercise.find({ isActive: true }).populate("category");
+  console.log(data[0].images, 'data')
   return data;
 };
 
-
 export const getExerciseByIdService = async (id) => {
-  const data = await Exercise.findById(id);
+  const data = await Exercise.findById(id).populate("category");
   return data;
 };
 
 export const createExerciseService = async (input, req) => {
   exerciseCreateSchema.parse(input);
 
+
   const exists = await Exercise.findOne({ slug: input.slug });
-  if (exists && exists._id.toString() !== id) {
+  if (exists) {
     throw new Error("Exercise with this slug already exists.");
   }
   const BASE_URL = getBaseUrl(req);
@@ -30,63 +31,170 @@ export const createExerciseService = async (input, req) => {
 
   for (const img of input?.images || []) {
     const file = await img.file;
+    console.log(path.join(process.cwd(), "src", "uploads", "exercises"));
     const uploaded = await handleImageUpload(
       file,
       path.join(process.cwd(), "src", "uploads", "exercises"),
-      BASE_URL
+      BASE_URL,
+      "exercises"
+
     );
     images.push({ ...uploaded, type: img.type });
   }
+
+  let image;
+  // for image
+  if (input?.image) {
+    const file = await input?.image.file;
+    const uploaded = await handleImageUpload(
+      file,
+      path.join(process.cwd(), "src", "uploads", "exercises"),
+      BASE_URL,
+      "exercises"
+    );
+    image = { ...uploaded };
+  }
+
+  input.image = image;
 
   const data = await Exercise.create({ ...input, images });
   return data;
 };
 
+ 
 export const updateExerciseService = async (id, input, req) => {
   exerciseUpdateSchema.parse(input);
-  const exists = await Exercise.findOne({ slug: input.slug });
-  if (exists) throw new Error("Exercise with this slug already exists.");
-
+  console.log('input', input, '');
+  
   const oldExercise = await Exercise.findById(id);
   if (!oldExercise) throw new Error("Exercise not found.");
+  
   const BASE_URL = getBaseUrl(req);
-  const oldImages = oldExercise.images || [];
-  const incomingExisting = input.images?.filter((img) => img.url) || [];
-  const incomingNew = input.images?.filter((img) => img.file) || [];
-  const images = [...oldImages];
-  for (const img of incomingExisting) {
-    const index = images.findIndex((i) => i.url === img.url);
-    if (index !== -1) {
-      images[index] = img;
+  
+  // Handle single image field
+  if (input.image !== undefined) {
+    // If new image is being uploaded
+    if (input.image?.file) {
+      // Delete old single image file if exists
+      if (oldExercise.image?.file) {
+        const oldFilePath = path.join(
+          process.cwd(),
+          "src",
+          "uploads",
+          "exercises",
+          oldExercise.image.file
+        );
+        if (fs.existsSync(oldFilePath)) {
+          fs.unlinkSync(oldFilePath);
+          console.log('Deleted old single image:', oldExercise.image.file);
+        }
+      }
+      
+      // Upload new single image
+      try {
+        const file = await input.image.file;
+        const uploaded = await handleImageUpload(
+          file,
+          path.join(process.cwd(), "src", "uploads", "exercises"),
+          BASE_URL,
+          "exercises"
+        );
+        input.image = {
+          ...uploaded,
+          altText: input.image.altText || ''
+        };
+        console.log('Uploaded new single image:', uploaded.file);
+      } catch (error) {
+        console.error('Error uploading single image:', error);
+        throw new Error(`Failed to upload single image: ${error.message}`);
+      }
     }
+    // If image is being removed (set to null/empty)
+    else if (input.image === null || (input.image && !input.image.url && !input.image.file)) {
+      // Delete old single image file if exists
+      if (oldExercise.image?.file) {
+        const oldFilePath = path.join(
+          process.cwd(),
+          "src",
+          "uploads",
+          "exercises",
+          oldExercise.image.file
+        );
+        if (fs.existsSync(oldFilePath)) {
+          fs.unlinkSync(oldFilePath);
+          console.log('Deleted removed single image:', oldExercise.image.file);
+        }
+      }
+      input.image = null;
+    }
+    // If existing image URL is being kept, no changes needed
   }
-  for (const img of incomingNew) {
-    const file = await img.file;
-    const uploaded = await handleImageUpload(
-      file,
-      path.join(process.cwd(), "src", "uploads", "exercises"),
-      BASE_URL
+  
+  // Handle images array field
+  if (input.images !== undefined) {
+    const oldImages = oldExercise.images || [];
+    const incomingImages = input.images || [];
+    
+    // Separate existing images (with URLs) and new images (with files)
+    const existingImages = incomingImages.filter(img => img.url);
+    const newImages = incomingImages.filter(img => img.file);
+    
+    // Find images that were removed (exist in old but not in incoming existing)
+    const removedImages = oldImages.filter(oldImg => 
+      !existingImages.some(existingImg => existingImg.url === oldImg.url)
     );
-    images.push({ ...uploaded, type: img.type });
+    
+    // Delete removed image files from filesystem
+    for (const removedImg of removedImages) {
+      if (removedImg.file) {
+        const filePath = path.join(
+          process.cwd(),
+          "src",
+          "uploads",
+          "exercises",
+          removedImg.file
+        );
+        if (fs.existsSync(filePath)) {
+          fs.unlinkSync(filePath);
+          console.log('Deleted removed image from array:', removedImg.file);
+        }
+      }
+    }
+    
+    // Start with existing images (these are kept)
+    const finalImages = [...existingImages];
+    
+    // Upload and add new images
+    for (const newImg of newImages) {
+      try {
+        const file = await newImg.file;
+        const uploaded = await handleImageUpload(
+          file,
+          path.join(process.cwd(), "src", "uploads", "exercises"),
+          BASE_URL,
+          "exercises"
+        );
+        finalImages.push({ 
+          ...uploaded, 
+          altText: newImg.altText || ''
+        });
+        console.log('Uploaded new image to array:', uploaded.file);
+      } catch (error) {
+        console.error('Error uploading image to array:', error);
+        throw new Error(`Failed to upload image: ${error.message}`);
+      }
+    }
+    
+    // Update input with final images array
+    input.images = finalImages;
   }
-
-  input.images = images;
-
-  // Delete associated image files
-  for (const img of oldImages) {
-    const filePath = path.join(
-      process.cwd(),
-      "src",
-      "uploads",
-      "exercises",
-      img.file
-    );
-    if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
-  }
-
+  
   const data = await Exercise.findByIdAndUpdate(id, input, { new: true });
   return data;
 };
+
+
+
 
 export const deleteExerciseService = async (id) => {
   const exercise = await Exercise.findById(id);

@@ -16,8 +16,6 @@ const categoryResolvers = {
     getAllCategories: tryCatch(async () => {
       const data = await getAllCategoriesService();
 
-      console.log(data);
-
       return successResponse("Categories fetched successfully", data);
     }),
 

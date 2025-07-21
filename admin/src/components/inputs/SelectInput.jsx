@@ -21,10 +21,9 @@ const SelectInput = ({
           id={name}
           name={name}
           value={value}
-          onChange={onChange}
-          className={`block w-full border rounded-md px-3 py-2 transition duration-200 dark:bg-[#212529] dark:text-white ease-in-out ${
-            error ? "border-red-500" : "border-gray-300"
-          } focus:outline-none appearance-none`} // Remove default styles and arrow
+          onChange={(e) => onChange(e.target.value)}
+          className={`block w-full border rounded-md px-3 py-2 transition duration-200 dark:bg-[#212529] dark:text-white ease-in-out ${error ? "border-red-500" : "border-gray-300"
+            } focus:outline-none appearance-none`} // Remove default styles and arrow
           style={{ backgroundImage: 'none' }} // Remove default background image
         >
           <option value="" disabled>

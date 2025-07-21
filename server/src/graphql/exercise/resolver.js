@@ -2,7 +2,13 @@ import GraphQLUpload from "graphql-upload/GraphQLUpload.mjs";
 
 import tryCatch from "../../utils/functions/tryCatch.js";
 import successResponse from "../../utils/response/successResponse.js";
-import { getAllExercisesService } from "../../services/exercies.service.js";
+import {
+  createExerciseService,
+  deleteExerciseService,
+  getAllExercisesService,
+  getExerciseByIdService,
+  updateExerciseService,
+} from "../../services/exercies.service.js";
 
 const exerciseResolvers = {
   Upload: GraphQLUpload,
@@ -10,11 +16,13 @@ const exerciseResolvers = {
   Query: {
     getAllExercises: tryCatch(async () => {
       const data = await getAllExercisesService();
+
       return successResponse("Exercises fetched successfully", data);
     }),
 
     getExerciseById: tryCatch(async (_, { id }) => {
       const data = await getExerciseByIdService(id);
+
       if (!data) throw new Error("Exercise not found.");
       return successResponse("Exercise fetched successfully", data);
     }),

@@ -12,7 +12,7 @@ const exerciseSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    categoryId: {
+    category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
       required: true,
@@ -40,10 +40,17 @@ const exerciseSchema = new mongoose.Schema(
       default: "Beginner",
     },
     image: {
-      url: { type: String, required: true },     // CDN or uploaded
+      url: { type: String, required: false }, // CDN or uploaded
       altText: { type: String, default: "" },
-      file: { type: String, required: true },    // file name if stored
+      file: { type: String, required: false }, // file name if stored
     },
+    images: [
+      {
+        url: { type: String, required: false }, // CDN or uploaded
+        altText: { type: String, default: "" },
+        file: { type: String, required: false },
+      },
+    ],
     videoUrl: {
       type: String, // Optional: YouTube/Vimeo/CDN video
     },

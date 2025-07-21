@@ -124,5 +124,6 @@ const categorySlice = createSlice({
   },
 });
 
-export const { clearCategoryError, setIsAdded, setIsUpdated } = categorySlice.actions;
+export const { clearCategoryError, setIsAdded, setIsUpdated } =
+  categorySlice.actions;
 export default categorySlice.reducer;

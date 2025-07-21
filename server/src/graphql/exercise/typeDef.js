@@ -1,23 +1,24 @@
-const exerciseTypeDefs = `#graphql
+ const exerciseTypeDefs = `#graphql
   scalar Upload
 
   type ExerciseImage {
     url: String!
     altText: String
-    file: String!
+    file: String
   }
 
   type Exercise {
     _id: ID!
     name: String!
     slug: String!
-    categoryId: Category!
+    category: Category
     type: String!
     primaryMuscles: [String!]!
     equipment: [String!]!
     instructions: [String!]!
     difficulty: String!
-    image: ExerciseImage!
+    image: ExerciseImage
+    images: [ExerciseImage]
     videoUrl: String
     isFeatured: Boolean
     isActive: Boolean
@@ -34,13 +35,14 @@ const exerciseTypeDefs = `#graphql
   input CreateExerciseInput {
     name: String!
     slug: String!
-    categoryId: ID!
+    category: ID!
     type: String!
     primaryMuscles: [String!]!
     equipment: [String!]!
     instructions: [String!]!
-    difficulty: String
-    image: ExerciseImageInput!
+    difficulty: String!
+    image: ExerciseImageInput
+    images: [ExerciseImageInput]
     videoUrl: String
     isFeatured: Boolean
     isActive: Boolean
@@ -49,13 +51,14 @@ const exerciseTypeDefs = `#graphql
   input UpdateExerciseInput {
     name: String
     slug: String
-    categoryId: ID
+    category: ID
     type: String
     primaryMuscles: [String]
     equipment: [String]
     instructions: [String]
     difficulty: String
     image: ExerciseImageInput
+    images: [ExerciseImageInput]
     videoUrl: String
     isFeatured: Boolean
     isActive: Boolean
@@ -80,7 +83,7 @@ const exerciseTypeDefs = `#graphql
 
   type Mutation {
     createExercise(input: CreateExerciseInput!): ExerciseResponse!
-    updateExercise(id: ID!, input: UpdateExerciseInput!): ExerciseResponse!
+    updateExercise(id: ID!, input: UpdateExerciseInput): ExerciseResponse!
     deleteExercise(id: ID!): ExerciseResponse!
   }
 `;

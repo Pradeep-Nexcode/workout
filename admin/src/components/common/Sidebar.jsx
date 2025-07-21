@@ -37,12 +37,12 @@ const Sidebar = ({ isCollapsed }) => {
     },
     
     {
-      name: "Products",
+      name: "exercises",
       icon: <MdInventory className={isCollapsed && "text-2xl"} />,
-      id: "products",
+      id: "exercises",
       items: [
-        { name: "All Products", icon: <FiMinus />, id: "all-products", path: "/products" },
-        { name: "Add Product", icon: <FiMinus />, id: "add-product", path: "/products/create" },
+        { name: "All Exercises", icon: <FiMinus />, id: "all-exercises", path: "/exercises" },
+        { name: "Add Exercises", icon: <FiMinus />, id: "add-exercise", path: "/exercises/create" },
       ],
     },
     {
@@ -55,12 +55,12 @@ const Sidebar = ({ isCollapsed }) => {
       ],
     },
     {
-      name: "Subcategories",
+      name: "workoutplans",
       icon: <FaBoxes className={isCollapsed && "text-2xl"} />,
       id: "subcategories",
       items: [
-        { name: "All Subcategories", icon: <FiMinus />, id: "all-subcategories", path: "/subcategories" },
-        { name: "Add Subcategory", icon: <FiMinus />, id: "add-subcategory", path: "/subcategories/create" },
+        { name: "All workoutplans", icon: <FiMinus />, id: "all-workoutplans", path: "/workoutplans" },
+        { name: "Add workoutplans", icon: <FiMinus />, id: "add-workoutplan", path: "/workoutplans/create" },
       ],
     },
     {

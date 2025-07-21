@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from "uuid";
  * @param {string} baseUrl - BASE_URL like https://yourdomain.com
  * @returns {Promise<{ url: string, file: string, altText: string }>}
  */
-const handleImageUpload = async (file, uploadDir, baseUrl) => {
+const handleImageUpload = async (file, uploadDir, baseUrl, folder) => {
   const { createReadStream, filename, mimetype } = file;
 
   const uniqueName = `${uuidv4()}-${filename}`;
@@ -18,13 +18,15 @@ const handleImageUpload = async (file, uploadDir, baseUrl) => {
   // Ensure uploadDir exists
   fs.mkdirSync(uploadDir, { recursive: true });
 
+  console.log(uploadDir, '')
+
   const stream = createReadStream();
   const out = fs.createWriteStream(targetPath);
   stream.pipe(out);
   await finished(out);
 
   return {
-    url: `${baseUrl}/src/uploads/categories/${uniqueName}`,
+    url: `${baseUrl}/src/uploads/${folder}/${uniqueName}`,
     file: uniqueName,
     altText: filename.replace(/\.[^/.]+$/, ""), // Remove extension for alt
   };
