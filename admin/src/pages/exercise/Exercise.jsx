@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, FieldArray } from 'formik';
 import * as Yup from 'yup';
+  import { useMemo } from 'react';
 
 import ShadowCard from '../../components/common/ShadowCard';
 import MinHeader from '../../components/common/MinHeader';
@@ -47,26 +48,48 @@ const Exercise = () => {
       dispatch(fetchExerciseById(id));
       console.log(exercise, "exercise");
     }
+
     return () => dispatch(clearExerciseError());
   }, [id]);
 
   // Simplified initial values
-  const initialValues = {
-    name: exercise?.name || '',
-    slug: exercise?.slug || '',
-    category: exercise?.category?._id || '',
-    type: exercise?.type || '',
-    primaryMuscles: exercise?.primaryMuscles || [''],
-    equipment: exercise?.equipment || [''],
-    instructions: exercise?.instructions || [''],
-    difficulty: exercise?.difficulty || '',
-    videoUrl: exercise?.videoUrl || '',
-    isFeatured: exercise?.isFeatured || false,
-    isActive: exercise?.isActive !== false,
-    // Simplified image handling
-    image: exercise?.image || null,
-    images: exercise?.images || [],
-  };
+
+  const initialValues = useMemo(() => {
+    if (!isEditMode) {
+      return {
+        name: '',
+        slug: '',
+        category: '',
+        type: '',
+        primaryMuscles: [''],
+        equipment: [''],
+        instructions: [''],
+        difficulty: '',
+        videoUrl: '',
+        isFeatured: false,
+        isActive: true,
+        image: null,
+        images: [],
+      };
+    }
+
+    return {
+      name: exercise?.name || '',
+      slug: exercise?.slug || '',
+      category: exercise?.category?._id || '',
+      type: exercise?.type || '',
+      primaryMuscles: exercise?.primaryMuscles || [''],
+      equipment: exercise?.equipment || [''],
+      instructions: exercise?.instructions || [''],
+      difficulty: exercise?.difficulty || '',
+      videoUrl: exercise?.videoUrl || '',
+      isFeatured: exercise?.isFeatured || false,
+      isActive: exercise?.isActive !== false,
+      image: exercise?.image || null,
+      images: exercise?.images || [],
+    };
+  }, [isEditMode, exercise]);
+
 
   const categoryOptions = categories.map((category) => ({
     value: category._id,
@@ -212,7 +235,7 @@ const Exercise = () => {
                   title="Main Exercise Image"
                   value={values.image}
                   onChange={(val) => setFieldValue("image", val)}
-                  maxSize={1024 * 1024 * 2} // 2MB limit
+                  maxSize={1024 * 1024 * 3} // 2MB limit
                 />
 
                 <MultipleImageInput
@@ -221,7 +244,7 @@ const Exercise = () => {
                   value={values.images}
                   onChange={(val) => setFieldValue("images", val)}
                   maxImages={5}
-                  maxSize={1024 * 1024 * 2} // 2MB per image
+                  maxSize={1024 * 1024 * 3} // 2MB per image
                 />
 
                 <div className="flex justify-end space-x-4 pt-4">

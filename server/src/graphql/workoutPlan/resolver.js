@@ -1,46 +1,35 @@
-import GraphQLUpload from "graphql-upload/GraphQLUpload.mjs";
 import tryCatch from "../../utils/functions/tryCatch.js";
-import successResponse from "../../utils/response/successResponse.js";
 import {
-  createWorkoutPlanService,
-  deleteWorkoutPlanService,
-  getAllWorkoutPlansService,
-  getWorkoutPlanByIdService,
-  updateWorkoutPlanService,
+  createUserWorkoutPlanService,
+  completeWorkoutPlanService,
+  updateWorkoutProgressService,
+  getWorkoutPlanByDateService,
+  getWorkoutHistoryService,
 } from "../../services/workoutPlan.service.js";
 
-const workoutPlanResolvers = {
-  Upload: GraphQLUpload,
-
+const userWorkoutPlanResolvers = {
   Query: {
-    getAllWorkoutPlans: tryCatch(async () => {
-      const data = await getAllWorkoutPlansService();
-      return successResponse("Workout plans fetched successfully", data);
+    getMyWorkoutPlan: tryCatch(async (_, { date }, context) => {
+      return await getWorkoutPlanByDateService(context.req.user._id, date);
     }),
-
-    getWorkoutPlanById: tryCatch(async (_, { id }) => {
-      const data = await getWorkoutPlanByIdService(id);
-      if (!data) throw new Error("Workout plan not found.");
-      return successResponse("Workout plan fetched successfully", data);
+    getMyWorkoutHistory: tryCatch(async (_, __, context) => {
+      return await getWorkoutHistoryService(context.req.user._id);
     }),
   },
 
   Mutation: {
-    createWorkoutPlan: tryCatch(async (_, { input }, context) => {
-      const data = await createWorkoutPlanService(input, context.req);
-      return successResponse("Workout plan created successfully", data);
+    createUserWorkoutPlan: tryCatch(async (_, { input }, context) => {
+      return await createUserWorkoutPlanService(input, context.req.user._id);
     }),
 
-    updateWorkoutPlan: tryCatch(async (_, { id, input }, context) => {
-      const data = await updateWorkoutPlanService(id, input, context.req);
-      return successResponse("Workout plan updated successfully", data);
+    completeWorkoutPlan: tryCatch(async (_, { id }) => {
+      return await completeWorkoutPlanService(id);
     }),
 
-    deleteWorkoutPlan: tryCatch(async (_, { id }) => {
-      const data = await deleteWorkoutPlanService(id);
-      return successResponse("Workout plan deleted successfully", data);
+    updateWorkoutProgress: tryCatch(async (_, { id, exerciseId }) => {
+      return await updateWorkoutProgressService(id, exerciseId);
     }),
   },
 };
 
-export default workoutPlanResolvers;
+export default userWorkoutPlanResolvers;

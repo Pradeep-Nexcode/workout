@@ -19,14 +19,7 @@ export const exerciseQueries = {
           equipment
           instructions
           difficulty
-          image {
-            url
-            altText
-          }
-          images {
-            url
-            altText
-          }
+          
           videoUrl
           isFeatured
           isActive
@@ -84,16 +77,7 @@ export const exerciseQueries = {
           equipment
           instructions
           difficulty
-          image {
-            url
-            altText
-            file
-          }
-          images {
-            url
-            altText
-            file
-          }
+
           videoUrl
           isFeatured
           isActive

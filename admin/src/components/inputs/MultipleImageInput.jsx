@@ -6,7 +6,7 @@ const MultipleImageInput = ({
   value = [],
   onChange,
   error,
-  maxSize = 2 * 1024 * 1024, // 2MB default
+  maxSize = 3 * 1024 * 1024, // 3MB default
   maxImages = 3,
 }) => {
   const [previewImages, setPreviewImages] = useState([]);

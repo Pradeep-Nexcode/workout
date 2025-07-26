@@ -1,8 +1,8 @@
- const exerciseTypeDefs = `#graphql
+const exerciseTypeDefs = `#graphql
   scalar Upload
 
   type ExerciseImage {
-    url: String!
+    url: String
     altText: String
     file: String
   }
@@ -13,8 +13,8 @@
     slug: String!
     category: Category
     type: String!
-    primaryMuscles: [String!]!
-    equipment: [String!]!
+    primaryMuscles: [String!]
+    equipment: [String!]
     instructions: [String!]!
     difficulty: String!
     image: ExerciseImage
@@ -78,11 +78,12 @@
 
   type Query {
     getAllExercises: ExercisesResponse!
-    getExerciseById(id: ID!): ExerciseResponse!
+    getExerciseById(id: ID!): ExerciseResponse
+    getExercisesByCategory(categoryId: ID!): ExercisesResponse
   }
 
   type Mutation {
-    createExercise(input: CreateExerciseInput!): ExerciseResponse!
+    createExercise(input: CreateExerciseInput): ExerciseResponse!
     updateExercise(id: ID!, input: UpdateExerciseInput): ExerciseResponse!
     deleteExercise(id: ID!): ExerciseResponse!
   }

@@ -1,109 +1,49 @@
 const workoutPlanTypeDefs = `#graphql
   scalar Upload
 
-  type WorkoutExercise {
-    exerciseId: ID!
-    sets: Int
-    reps: String
-    rest: String
-  }
+   type WorkoutExercise {
+  exerciseId: ID!
+  sets: Int
+  reps: String
+  rest: String
+  completed: Boolean
+}
 
-  type WorkoutDay {
-    day: String!
-    focus: String!
-    exercises: [WorkoutExercise!]!
-  }
+type UserWorkoutPlan {
+  _id: ID!
+  user: ID!
+  date: String!
+  targetMuscles: [String!]
+  exercises: [WorkoutExercise!]!
+  status: String!
+  completedAt: String
+  createdAt: String
+  updatedAt: String
+}
 
-  type WorkoutImage {
-    url: String
-    file: String
-    altText: String
-  }
+input WorkoutExerciseInput {
+  exerciseId: ID!
+  sets: Int
+  reps: String
+  rest: String
+}
 
-  type WorkoutPlan {
-    _id: ID!
-    name: String!
-    slug: String!
-    goal: String
-    level: String!
-    description: String!
-    daysPerWeek: Int
-    workoutDays: [WorkoutDay!]!
-    image: WorkoutImage
-    isFeatured: Boolean
-    isActive: Boolean
-    createdBy: ID
-    createdAt: String
-    updatedAt: String
-  }
+input CreateUserWorkoutPlanInput {
+  targetMuscles: [String!]
+  exercises: [WorkoutExerciseInput!]!
+}
 
-  input WorkoutExerciseInput {
-    exerciseId: ID!
-    sets: Int
-    reps: String
-    rest: String
-  }
+type Query {
+  getMyWorkoutPlan(date: String!): UserWorkoutPlan
+  getMyWorkoutHistory: [UserWorkoutPlan!]!
+}
 
-  input WorkoutDayInput {
-    day: String!
-    focus: String!
-    exercises: [WorkoutExerciseInput!]!
-  }
+type Mutation {
+  createUserWorkoutPlan(input: CreateUserWorkoutPlanInput!): UserWorkoutPlan!
+  completeWorkoutPlan(id: ID!): UserWorkoutPlan!
+  updateWorkoutProgress(id: ID!, exerciseId: ID!): UserWorkoutPlan!
+}
 
-  input WorkoutImageInput {
-    url: String
-    file: Upload
-    altText: String
-  }
-
-  input CreateWorkoutPlanInput {
-    name: String!
-    slug: String
-    goal: String
-    level: String!
-    description: String!
-    daysPerWeek: Int
-    workoutDays: [WorkoutDayInput!]!
-    image: WorkoutImageInput
-    isFeatured: Boolean
-    isActive: Boolean
-  }
-
-  input UpdateWorkoutPlanInput {
-    name: String
-    slug: String
-    goal: String
-    level: String
-    description: String
-    daysPerWeek: Int
-    workoutDays: [WorkoutDayInput!]
-    image: WorkoutImageInput
-    isFeatured: Boolean
-    isActive: Boolean
-  }
-
-  type WorkoutPlanResponse {
-    success: Boolean!
-    message: String!
-    data: WorkoutPlan
-  }
-
-  type WorkoutPlansResponse {
-    success: Boolean!
-    message: String!
-    data: [WorkoutPlan!]!
-  }
-
-  type Query {
-    getAllWorkoutPlans: WorkoutPlansResponse!
-    getWorkoutPlanById(id: ID!): WorkoutPlanResponse!
-  }
-
-  type Mutation {
-    createWorkoutPlan(input: CreateWorkoutPlanInput!): WorkoutPlanResponse!
-    updateWorkoutPlan(id: ID!, input: UpdateWorkoutPlanInput!): WorkoutPlanResponse!
-    deleteWorkoutPlan(id: ID!): WorkoutPlanResponse!
-  }
 `;
 
 export default workoutPlanTypeDefs;

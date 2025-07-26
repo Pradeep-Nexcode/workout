@@ -33,7 +33,9 @@ const Category = () => {
     if (isEditMode) {
       dispatch(fetchCategoryById(id));
     }
-
+    // clear form data if create mode
+    
+ 
     console.log(category, 'category');
 
     return () => {

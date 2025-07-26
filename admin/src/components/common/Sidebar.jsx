@@ -25,16 +25,16 @@ const Sidebar = ({ isCollapsed }) => {
       id: "dashboard",
       path: "/",
     },
-    {
-      name: "Analytics",
-      icon: <FaChartBar className={isCollapsed && "text-2xl"} />,
-      id: "analytics",
-      items: [
-        { name: "Sales Overview", icon: <FiMinus />, id: "sales-overview", path: "/analytics/sales-overview" },
-        { name: "Customer Analytics", icon: <FiMinus />, id: "customer-analytics", path: "/analytics/customer-analytics" },
-        { name: "Inventory Reports", icon: <FiMinus />, id: "inventory-reports", path: "/analytics/inventory-reports" },
-      ],
-    },
+    // {
+    //   name: "Analytics",
+    //   icon: <FaChartBar className={isCollapsed && "text-2xl"} />,
+    //   id: "analytics",
+    //   items: [
+    //     { name: "Sales Overview", icon: <FiMinus />, id: "sales-overview", path: "/analytics/sales-overview" },
+    //     { name: "Customer Analytics", icon: <FiMinus />, id: "customer-analytics", path: "/analytics/customer-analytics" },
+    //     { name: "Inventory Reports", icon: <FiMinus />, id: "inventory-reports", path: "/analytics/inventory-reports" },
+    //   ],
+    // },
     
     {
       name: "exercises",
@@ -63,72 +63,72 @@ const Sidebar = ({ isCollapsed }) => {
         { name: "Add workoutplans", icon: <FiMinus />, id: "add-workoutplan", path: "/workoutplans/create" },
       ],
     },
-    {
-      name: "Attributes",
-      icon: <FiTag className={isCollapsed && "text-2xl"} />,
-      id: "attributes",
-      items: [
-        { name: "All Attributes", icon: <FiMinus />, id: "all-attributes", path: "/attributes" },
-        { name: "Add Attribute", icon: <FiMinus />, id: "add-attribute", path: "/attributes/add" },
-      ],
-    },
-    {
-      name: "Orders",
-      icon: <MdOutlineShoppingCart className={isCollapsed && "text-2xl"} />,
-      id: "orders",
-      items: [
-        { name: "All Orders", icon: <FiMinus />, id: "all-orders", path: "/orders/all" },
-      ],
-    },
+    // {
+    //   name: "Attributes",
+    //   icon: <FiTag className={isCollapsed && "text-2xl"} />,
+    //   id: "attributes",
+    //   items: [
+    //     { name: "All Attributes", icon: <FiMinus />, id: "all-attributes", path: "/attributes" },
+    //     { name: "Add Attribute", icon: <FiMinus />, id: "add-attribute", path: "/attributes/add" },
+    //   ],
+    // },
+    // {
+    //   name: "Orders",
+    //   icon: <MdOutlineShoppingCart className={isCollapsed && "text-2xl"} />,
+    //   id: "orders",
+    //   items: [
+    //     { name: "All Orders", icon: <FiMinus />, id: "all-orders", path: "/orders/all" },
+    //   ],
+    // },
 
-    {
-      name: "Inventory",
-      icon: <FaBoxes className={isCollapsed && "text-2xl"} />,
-      id: "inventory",
-      items: [
-        { name: "Stock Management", icon: <FiMinus />, id: "stock-management", path: "/inventory/stock" },
-      ],
-    },
-    {
-      name: "Customers",
-      icon: <MdPeople className={isCollapsed && "text-2xl"} />,
-      id: "customers",
-      items: [
-        { name: "All Customers", icon: <FiMinus />, id: "all-customers", path: "/customers/all" },
-      ],
-    },
-    {
-      name: "Settings",
-      icon: <LuSettings className={isCollapsed && "text-2xl"} />,
-      id: "settings",
-      items: [
-        { name: "Google Analytics", icon: <FiMinus />, id: "analytics-settings", path: "/settings/analytics" },
-        { name: "Email", icon: <FiMinus />, id: "email-settings", path: "/settings/email" },
-        { name: "WhatsApp", icon: <FiMinus />, id: "whatsapp-settings", path: "/settings/whatsapp" },
-      ],
-    },
-    {
-      name: "Marketing",
-      icon: <MdOutlineEmail className={isCollapsed && "text-2xl"} />,
-      id: "marketing",
-      items: [
-        { name: "Email Campaigns", icon: <FiMinus />, id: "email-campaigns", path: "/marketing/email" },
-        { name: "Create Campaign", icon: <FiMinus />, id: "create-campaign", path: "/marketing/email/create" },
-        { name: "Email Templates", icon: <FiMinus />, id: "email-templates", path: "/marketing/email/templates" },
-        { name: "Automation", icon: <FiMinus />, id: "automation", path: "/marketing/email/automation" },
-      ],
-    },
-    {
-      name: "Blog",
-      icon: <FaBlog className={isCollapsed && "text-2xl"} />,
-      id: "blog",
-      items: [
-        { name: "All Posts", icon: <FiMinus />, id: "all-posts", path: "/blog/posts" },
-        { name: "Add Post", icon: <FiMinus />, id: "add-post", path: "/blog/posts/create" },
-        { name: "Categories", icon: <FiMinus />, id: "blog-categories", path: "/blog/categories" },
-        { name: "Comments", icon: <FiMinus />, id: "blog-comments", path: "/blog/comments" },
-      ],
-    },
+    // {
+    //   name: "Inventory",
+    //   icon: <FaBoxes className={isCollapsed && "text-2xl"} />,
+    //   id: "inventory",
+    //   items: [
+    //     { name: "Stock Management", icon: <FiMinus />, id: "stock-management", path: "/inventory/stock" },
+    //   ],
+    // },
+    // {
+    //   name: "Customers",
+    //   icon: <MdPeople className={isCollapsed && "text-2xl"} />,
+    //   id: "customers",
+    //   items: [
+    //     { name: "All Customers", icon: <FiMinus />, id: "all-customers", path: "/customers/all" },
+    //   ],
+    // },
+    // {
+    //   name: "Settings",
+    //   icon: <LuSettings className={isCollapsed && "text-2xl"} />,
+    //   id: "settings",
+    //   items: [
+    //     { name: "Google Analytics", icon: <FiMinus />, id: "analytics-settings", path: "/settings/analytics" },
+    //     { name: "Email", icon: <FiMinus />, id: "email-settings", path: "/settings/email" },
+    //     { name: "WhatsApp", icon: <FiMinus />, id: "whatsapp-settings", path: "/settings/whatsapp" },
+    //   ],
+    // },
+    // {
+    //   name: "Marketing",
+    //   icon: <MdOutlineEmail className={isCollapsed && "text-2xl"} />,
+    //   id: "marketing",
+    //   items: [
+    //     { name: "Email Campaigns", icon: <FiMinus />, id: "email-campaigns", path: "/marketing/email" },
+    //     { name: "Create Campaign", icon: <FiMinus />, id: "create-campaign", path: "/marketing/email/create" },
+    //     { name: "Email Templates", icon: <FiMinus />, id: "email-templates", path: "/marketing/email/templates" },
+    //     { name: "Automation", icon: <FiMinus />, id: "automation", path: "/marketing/email/automation" },
+    //   ],
+    // },
+    // {
+    //   name: "Blog",
+    //   icon: <FaBlog className={isCollapsed && "text-2xl"} />,
+    //   id: "blog",
+    //   items: [
+    //     { name: "All Posts", icon: <FiMinus />, id: "all-posts", path: "/blog/posts" },
+    //     { name: "Add Post", icon: <FiMinus />, id: "add-post", path: "/blog/posts/create" },
+    //     { name: "Categories", icon: <FiMinus />, id: "blog-categories", path: "/blog/categories" },
+    //     { name: "Comments", icon: <FiMinus />, id: "blog-comments", path: "/blog/comments" },
+    //   ],
+    // },
   ];
 
   useEffect(() => {
@@ -170,7 +170,7 @@ const Sidebar = ({ isCollapsed }) => {
 
   const renderSubMenu = (subItems) => {
     return subItems.map((subItem) => (
-      <div key={subItem?.id}>
+      <div key={subItem?._id}>
         <div
           className={`py-[5px] px-2 text-sm flex items-center justify-between w-full space-x-2 cursor-pointer ${isItemActive(subItem?.id)
             ? "bg-gray-200 text-black dark:bg-gray-700 dark:text-white rounded-md"
@@ -242,7 +242,7 @@ const Sidebar = ({ isCollapsed }) => {
 
         {items?.map((item) => (
           <div
-            key={item?.id}
+            key={item?._id}
             className="w-full"
             onMouseEnter={() => isCollapsed && setHoveredMenu(item?.id)}
           >

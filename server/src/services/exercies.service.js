@@ -18,6 +18,16 @@ export const getExerciseByIdService = async (id) => {
   return data;
 };
 
+export const getExercisesByCategoryService = async (categoryId) => {
+
+  console.log('categoryId', categoryId, '');
+    const exercises = await Exercise.find({
+      category: categoryId,
+    }).populate("category", "name slug"); // Optional
+    return exercises;
+    
+};
+
 export const createExerciseService = async (input, req) => {
   exerciseCreateSchema.parse(input);
 

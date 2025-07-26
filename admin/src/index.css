@@ -4,9 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
-*{
+* {
   font-family: "Poppins", serif;
 }
 .heading {
@@ -21,11 +19,11 @@
 }
 
 .myDark {
-  @apply text-[#16423C] dark:text-[#16423C]
+  @apply text-[#16423C] dark:text-[#16423C];
 }
 
 .sidebarBg {
-  @apply  bg-[#16423C] dark:bg-[#1A1D21];
+  @apply bg-[#16423C] dark:bg-[#1A1D21];
 }
 
 .headerBg {
@@ -35,14 +33,13 @@
   @apply p-2 text-white hover:bg-[#16423C] dark:hover:bg-gray-700  dark:text-white rounded-full text-2xl;
 }
 
-.btn{
-  @apply px-4 py-2 text-sm rounded-sm bg-[#16423C] dark:bg-[#16423C] text-white dark:text-white hover:bg-[#16423C] dark:hover:bg-[#16423C] hover:text-white dark:hover:text-white;
+.btn {
+  @apply cursor-pointer px-4 py-2 text-sm rounded-sm bg-[#16423C] dark:bg-[#16423C] text-white dark:text-white hover:bg-[#16423C] dark:hover:bg-[#16423C] hover:text-white dark:hover:text-white;
 }
-.btnOutline{
-  @apply px-4 py-2 text-sm rounded-sm  border-2 border-transparent hover:border-[#16423C] dark:border-[#16423C] text-[#16423C] dark:text-[#16423C]  cursor-pointer select-none;
+.btnOutline {
+  @apply cursor-pointer px-4 py-2 text-sm rounded-sm  border-2 border-transparent hover:border-[#16423C] dark:border-[#16423C] text-[#16423C] dark:text-[#16423C]  cursor-pointer select-none;
 }
 
- 
 .myScrollHidden::-webkit-scrollbar {
   width: 0px; /* Width of the scrollbar */
   height: 0px; /* Height for horizontal scrollbar */
@@ -51,7 +48,7 @@
 /* Apply globally to all scrollbars */
 .myScroll {
   scrollbar-width: thin; /* For Firefox */
-  scrollbar-color: #16423C #e0e0e0; /* Thumb color and track color */
+  scrollbar-color: #16423c #e0e0e0; /* Thumb color and track color */
 }
 
 /* Webkit-based browsers (Chrome, Edge, Safari) */
@@ -78,4 +75,3 @@
 .myScroll::-webkit-scrollbar-corner {
   background: transparent; /* Corner where horizontal and vertical scrollbars meet */
 }
- 

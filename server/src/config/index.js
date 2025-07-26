@@ -33,7 +33,11 @@ export const config = {
   cors: {
     allowedOrigins: process.env.ALLOWED_ORIGINS
       ? process.env.ALLOWED_ORIGINS.split(",")
-      : ["http://localhost:5173", "https://studio.apollographql.com"],
+      : [
+          "http://localhost:5173",
+          "https://studio.apollographql.com",
+          "http://localhost:3000",
+        ],
   },
 
   // File Upload Configuration

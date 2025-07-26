@@ -7,6 +7,7 @@ import {
   deleteExerciseService,
   getAllExercisesService,
   getExerciseByIdService,
+  getExercisesByCategoryService,
   updateExerciseService,
 } from "../../services/exercies.service.js";
 
@@ -26,10 +27,17 @@ const exerciseResolvers = {
       if (!data) throw new Error("Exercise not found.");
       return successResponse("Exercise fetched successfully", data);
     }),
+
+    getExercisesByCategory: tryCatch(async (_, { categoryId }) => {
+      const data = await getExercisesByCategoryService(categoryId);
+
+      return successResponse("Exercises fetched successfully", data);
+    }),
   },
 
   Mutation: {
     createExercise: tryCatch(async (_, { input }, context) => {
+      console.log(input,'input')
       const data = await createExerciseService(input, context.req);
       return successResponse("Exercise created successfully", data);
     }),

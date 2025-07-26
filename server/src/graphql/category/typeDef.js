@@ -3,7 +3,7 @@ const categoryTypeDefs = `
   scalar Upload
 
   type CategoryImage {
-    url: String!
+    url: String
     file: String
     altText: String
     type: String

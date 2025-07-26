@@ -1,7 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 import { categoryQueries } from "./category";
-import { API_URL } from "../config";
 import apolloClient from "../apolloClient";
 
 // Fetch All

@@ -1,95 +1,47 @@
-import fs from "fs";
-import path from "path";
-import WorkoutPlan from "../models/workoutPlan.js";
-import getBaseUrl from "../utils/config.js";
-import handleImageUpload from "../utils/functions/handleImageUpload.js";
+import workoutPlan from "../models/workoutPlan.js";
 
-export const getAllWorkoutPlansService = async () => {
-  return await WorkoutPlan.find({ isActive: true });
-};
+export const createUserWorkoutPlanService = async (input, userId) => {
+  const today = new Date().toISOString().split("T")[0];
+  const existing = await workoutPlan.findOne({ user: userId, date: today });
 
-export const getWorkoutPlanByIdService = async (id) => {
-  return await WorkoutPlan.findById(id);
-};
+  if (existing) throw new Error("Workout plan for today already exists.");
 
-export const createWorkoutPlanService = async (input, req) => {
-  const exists = await WorkoutPlan.findOne({ slug: input.slug });
-  if (exists) throw new Error("Workout plan with this slug already exists.");
-
-  const BASE_URL = getBaseUrl(req);
-
-  let image = {};
-  if (input.image?.file) {
-    const file = await input.image.file;
-    const uploaded = await handleImageUpload(
-      file,
-      path.join(process.cwd(), "src", "uploads", "workout-plans"),
-      BASE_URL
-    );
-    image = {
-      url: uploaded.url,
-      file: uploaded.filename,
-      altText: input.image.altText || "",
-    };
-  }
-
-  const slug = input.slug || input.name.toLowerCase().replace(/\s+/g, "-");
-
-  const plan = await WorkoutPlan.create({
+  return await workoutPlan.create({
+    user: userId,
+    date: today,
     ...input,
-    slug,
-    image,
-    createdBy: req?.user?._id || null,
   });
-
-  return plan;
 };
 
-export const updateWorkoutPlanService = async (id, input, req) => {
-  const plan = await WorkoutPlan.findById(id);
-  if (!plan) throw new Error("Workout plan not found.");
-
-  const BASE_URL = getBaseUrl(req);
-
-  let image = plan.image;
-  if (input.image?.file) {
-    const file = await input.image.file;
-
-    if (image?.file) {
-      const oldPath = path.join(process.cwd(), "src", "uploads", "workout-plans", image.file);
-      if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
-    }
-
-    const uploaded = await handleImageUpload(
-      file,
-      path.join(process.cwd(), "src", "uploads", "workout-plans"),
-      BASE_URL
-    );
-
-    image = {
-      url: uploaded.url,
-      file: uploaded.filename,
-      altText: input.image.altText || "",
-    };
-  }
-
-  const slug = input.slug || input.name?.toLowerCase().replace(/\s+/g, "-");
-
-  return await WorkoutPlan.findByIdAndUpdate(
+export const completeWorkoutPlanService = async (id) => {
+  return await workoutPlan.findByIdAndUpdate(
     id,
-    { ...input, slug, image },
+    {
+      status: "Completed",
+      completedAt: new Date(),
+    },
     { new: true }
   );
 };
 
-export const deleteWorkoutPlanService = async (id) => {
-  const plan = await WorkoutPlan.findById(id);
+export const updateWorkoutProgressService = async (planId, exerciseId) => {
+  const plan = await workoutPlan.findById(planId);
   if (!plan) throw new Error("Workout plan not found.");
 
-  if (plan.image?.file) {
-    const filePath = path.join(process.cwd(), "src", "uploads", "workout-plans", plan.image.file);
-    if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
-  }
+  const exercise = plan.exercises.find((ex) => ex.exerciseId.toString() === exerciseId);
+  if (!exercise) throw new Error("Exercise not found in this workout.");
 
-  return await WorkoutPlan.findByIdAndDelete(id);
+  exercise.completed = true;
+  await plan.save();
+
+  return plan;
+};
+
+export const getWorkoutPlanByDateService = async (userId, dateStr) => {
+  const date = new Date(dateStr).toISOString().split("T")[0];
+  return await workoutPlan.findOne({ user: userId, date });
+};
+
+export const getWorkoutHistoryService = async (userId) => {
+  return await workoutPlan.find({ user: userId }).sort({ date: -1 });
 };
