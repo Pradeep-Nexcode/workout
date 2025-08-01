@@ -26,6 +26,13 @@ const exerciseTypeDefs = `#graphql
     updatedAt: String
   }
 
+  type ExercisePagination {
+    exercises: [Exercise!]!
+    total: Int
+    page: Int
+    totalPages: Int
+  }
+
   input ExerciseImageInput {
     url: String
     altText: String
@@ -70,6 +77,12 @@ const exerciseTypeDefs = `#graphql
     data: Exercise
   }
 
+  type ExercisesPaginationResponse {
+    success: Boolean!
+    message: String!
+    data: ExercisePagination
+  }
+
   type ExercisesResponse {
     success: Boolean!
     message: String!
@@ -77,9 +90,11 @@ const exerciseTypeDefs = `#graphql
   }
 
   type Query {
-    getAllExercises: ExercisesResponse!
+    # With pagination + optional filters
+    getAllExercises(page: Int, limit: Int, search: String, categoryId: ID): ExercisesPaginationResponse!
+
     getExerciseById(id: ID!): ExerciseResponse
-    getExercisesByCategory(categoryId: ID!): ExercisesResponse
+    getExercisesByCategory(categoryId: ID!, page: Int, limit: Int): ExercisesPaginationResponse!
   }
 
   type Mutation {

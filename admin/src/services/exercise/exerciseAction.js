@@ -4,14 +4,14 @@ import apolloClient from "../apolloClient";
 
 export const fetchAllExercises = createAsyncThunk(
   "exercise/fetchAll",
-  async (_, { rejectWithValue }) => {
+  async ({ page = 1, limit = 10 }, { rejectWithValue }) => {
     try {
       const response = await apolloClient.query({
         query: exerciseQueries.GET_ALL_EXERCISES,
+        variables: { page, limit },
         fetchPolicy: "no-cache",
       });
-
-      return response.data.getAllExercises.data;
+      return response.data.getAllExercises;
     } catch (err) {
       return rejectWithValue(err.message || "Failed to fetch exercises");
     }

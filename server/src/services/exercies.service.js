@@ -7,10 +7,24 @@ import handleImageUpload from "./../utils/functions/handleImageUpload.js";
 import getBaseUrl from "./../utils/config.js";
 import { exerciseCreateSchema, exerciseUpdateSchema } from "./../utils/validations/exercise.validation.js";
 
-export const getAllExercisesService = async () => {
-  const data = await Exercise.find({ isActive: true }).populate("category");
-  console.log(data[0].images, 'data')
-  return data;
+export const getAllExercisesService = async (page = 1, limit = 10) => {
+  const skip = (page - 1) * limit;
+
+  const [data, total] = await Promise.all([
+    Exercise.find({ isActive: true })
+      .populate("category")
+      .skip(skip)
+      .limit(limit)
+      .sort({ createdAt: -1 }), // newest first
+    Exercise.countDocuments({ isActive: true }),
+  ]);
+
+  return {
+    exercises: data,
+    total,
+    page,
+    totalPages: Math.ceil(total / limit),
+  };
 };
 
 export const getExerciseByIdService = async (id) => {

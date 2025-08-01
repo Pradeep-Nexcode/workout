@@ -15,10 +15,9 @@ const exerciseResolvers = {
   Upload: GraphQLUpload,
 
   Query: {
-    getAllExercises: tryCatch(async () => {
-      const data = await getAllExercisesService();
-
-      return successResponse("Exercises fetched successfully", data);
+    getAllExercises: tryCatch(async (_, { page, limit }) => {
+      const result = await getAllExercisesService(page, limit);
+      return successResponse("Exercises fetched successfully", result);
     }),
 
     getExerciseById: tryCatch(async (_, { id }) => {
@@ -37,7 +36,7 @@ const exerciseResolvers = {
 
   Mutation: {
     createExercise: tryCatch(async (_, { input }, context) => {
-      console.log(input,'input')
+      console.log(input, "input");
       const data = await createExerciseService(input, context.req);
       return successResponse("Exercise created successfully", data);
     }),
