@@ -2,9 +2,9 @@ import workoutPlan from "../models/workoutPlan.js";
 
 export const createUserWorkoutPlanService = async (input, userId) => {
   const today = new Date().toISOString().split("T")[0];
-  const existing = await workoutPlan.findOne({ user: userId, date: today });
+  // const existing = await workoutPlan.findOne({ user: userId, date: today });
 
-  if (existing) throw new Error("Workout plan for today already exists.");
+  // if (existing) throw new Error("Workout plan for today already exists.");
 
   return await workoutPlan.create({
     user: userId,
