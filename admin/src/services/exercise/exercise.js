@@ -6,28 +6,29 @@ export const exerciseQueries = {
       getAllExercises(page: $page, limit: $limit) {
         success
         message
-        totalPages
-        page
-        total
         data {
-          _id
-          name
-          slug
-          category {
+          totalPages
+          page
+          total
+          exercises {
             _id
             name
+            slug
+            category {
+              name
+            }
+            type
+            primaryMuscles
+            equipment
+            instructions
+            difficulty
+
+            videoUrl
+            isFeatured
+            isActive
+            createdAt
+            updatedAt
           }
-          type
-          primaryMuscles
-          equipment
-          instructions
-          difficulty
-          
-          videoUrl
-          isFeatured
-          isActive
-          createdAt
-          updatedAt
         }
       }
     }

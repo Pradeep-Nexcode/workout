@@ -3,20 +3,19 @@ import { gql } from "@apollo/client";
 export const workoutPlanQueries = {
   // 🔍 Fetch all workout plans (admin templates)
   GET_ALL_WORKOUT_PLANS: gql`
-    query GetAllWorkoutPlans {
-      getAllWorkoutPlans {
+    query getTodayWorkoutPlan {
+      getTodayWorkoutPlan {
         success
         message
         data {
           _id
-          name
-          slug
-          goal
-          level
-          description
-          daysPerWeek
-          isFeatured
-          isActive
+          targetMuscles
+          exercises {
+            exerciseId
+            sets
+            reps
+            rest
+          }
           createdAt
           updatedAt
         }
@@ -32,28 +31,12 @@ export const workoutPlanQueries = {
         message
         data {
           _id
-          name
-          slug
-          goal
-          level
-          description
-          daysPerWeek
-          isFeatured
-          isActive
-          workoutDays {
-            day
-            focus
-            exercises {
-              exerciseId
-              sets
-              reps
-              rest
-            }
-          }
-          image {
-            url
-            altText
-            file
+          targetMuscles
+          exercises {
+            exerciseId
+            sets
+            reps
+            rest
           }
           createdAt
           updatedAt

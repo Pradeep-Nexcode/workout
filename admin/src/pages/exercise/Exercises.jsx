@@ -9,8 +9,9 @@ const Exercises = () => {
   const { loading, exercises } = useSelector((state) => state.exercise);
 
   useEffect(() => {
-    dispatch(fetchAllExercises());
+    dispatch(fetchAllExercises({ page: 1, limit: 12 }));
   }, [dispatch]);
+
 
   const handleDelete = (exerciseId) => {
     dispatch(deleteExercise(exerciseId));
@@ -28,7 +29,7 @@ const Exercises = () => {
         <>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {exercises.map((exercise) => (
+            {exercises?.exercises?.map((exercise) => (
               <div
                 key={exercise._id}
                 className="bg-white/10 shadow rounded-lg p-4 hover:shadow-md transition"
@@ -54,7 +55,12 @@ const Exercises = () => {
               </div>
             ))}
           </div>
-          <Pagination  />
+          <Pagination
+            totalPages={exercises?.totalPages}
+            currentPage={exercises?.page}
+            itemsPerPage={exercises?.limit}
+            onPageChange={(page) => dispatch(fetchAllExercises({ page, limit: 12 }))}
+          />
         </>
       )}
     </div>

@@ -7,6 +7,7 @@ const workoutPlanTypeDefs = `#graphql
     reps: String
     rest: String
     completed: Boolean
+    _id: ID
   }
 
   type UserWorkoutPlan {
@@ -32,14 +33,34 @@ const workoutPlanTypeDefs = `#graphql
     targetMuscles: [String]
     exercises: [WorkoutExerciseInput]
   }
+  
+  input UpdateWorkoutPlanInput {
+    targetMuscles: [String]
+    exercises: [WorkoutExerciseInput]
+  }
+
+
+  type WorkoutPlanResponse {
+    success: Boolean
+    message: String
+    data: UserWorkoutPlan
+  }
+
+  type WorkoutPlansResponse {
+    success: Boolean
+    message: String
+    data: [UserWorkoutPlan]
+  }
 
   type Query {
     getMyWorkoutPlan(date: String!): UserWorkoutPlan
     getMyWorkoutHistory: [UserWorkoutPlan!]!
+    getTodayWorkoutPlan: WorkoutPlansResponse
+    getWorkoutPlanById(id: ID!): WorkoutPlanResponse
   }
 
   type Mutation {
-    createUserWorkoutPlan(input: CreateUserWorkoutPlanInput!): UserWorkoutPlan!
+    createWorkoutPlan(input: CreateUserWorkoutPlanInput): WorkoutPlanResponse
     completeWorkoutPlan(id: ID!): UserWorkoutPlan!
     updateWorkoutProgress(id: ID!, exerciseId: ID!): UserWorkoutPlan!
   }

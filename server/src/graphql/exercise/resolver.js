@@ -15,9 +15,27 @@ const exerciseResolvers = {
   Upload: GraphQLUpload,
 
   Query: {
-    getAllExercises: tryCatch(async (_, { page, limit }) => {
-      const result = await getAllExercisesService(page, limit);
-      return successResponse("Exercises fetched successfully", result);
+    getAllExercises: tryCatch(async (_, args) => {
+      const { page, limit, search, categoryId, isActive } = args;
+
+      const { exercises, pagination } = await getAllExercisesService({
+        page,
+        limit,
+        search,
+        categoryId,
+        isActive,
+      });
+
+      return {
+        success: true,
+        message: "Exercises fetched successfully",
+        data: {
+          exercises, // The list of exercises
+          total: pagination.total, // Total count
+          page: pagination.page, // Current page
+          totalPages: pagination.totalPages, // Total pages
+        },
+      };
     }),
 
     getExerciseById: tryCatch(async (_, { id }) => {

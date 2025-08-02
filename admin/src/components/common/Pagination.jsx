@@ -2,9 +2,9 @@ import React from 'react'
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 const Pagination = ({
     currentPage,
-        totalPages,
-        totalItems,
-        itemsPerPage,
+    totalPages,
+    totalItems,
+    itemsPerPage,
     onPageChange
 }) => {
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -62,7 +62,7 @@ const Pagination = ({
             <button
                 onClick={() => onPageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className="w-8 h-8 lg:w-8 lg:h-9 flex items-center justify-center  bg-[#23262D] dark:bg-[#23262D] rounded-[2px] disabled:opacity-50"
+                className="w-8 h-8 lg:w-8 lg:h-9 cursor-pointer flex items-center justify-center  bg-[#23262D] dark:bg-[#23262D] rounded-[2px] disabled:opacity-50"
             >
                 <IoIosArrowBack />
             </button>
@@ -73,9 +73,9 @@ const Pagination = ({
                     page !== '...' ? (
                         <button
                             key={index}
-                            className={`h-6 lg:h-7 flex items-center justify-center rounded-[2px] ${getButtonWidthClass(page)} ${page === currentPage
-                                    ? 'bg-[#F1F0E9] dark:bg-[#F1F0E9] text-black'
-                                    : 'bg-[#16423C]  dark:bg-[#16423C]'
+                            className={`h-6 lg:h-7 flex cursor-pointer items-center justify-center rounded-[2px] ${getButtonWidthClass(page)} ${page === currentPage
+                                ? 'bg-[#F1F0E9] dark:bg-[#F1F0E9] text-black'
+                                : 'bg-[#16423C]  dark:bg-[#16423C]'
                                 }`}
                             onClick={() => onPageChange(page)}
                         >
@@ -91,7 +91,7 @@ const Pagination = ({
             <button
                 onClick={() => onPageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className="w-8 h-8 lg:w-8 lg:h-9 flex items-center justify-center text-[#F1F0E9] bg-[#23262D] dark:bg-[#23262D] rounded-[2px] disabled:opacity-50"
+                className="w-8 h-8 lg:w-8 lg:h-9 cursor-pointer flex items-center justify-center text-[#F1F0E9] bg-[#23262D] dark:bg-[#23262D] rounded-[2px] disabled:opacity-50"
             >
                 <IoIosArrowForward />
             </button>

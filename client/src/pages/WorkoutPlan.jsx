@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, FieldArray } from 'formik';
 import * as Yup from 'yup';
 
-import TextInput from '../../components/inputs/TextInput';
-import SelectInput from '../../components/inputs/SelectInput';
-import Btn from '../../components/buttons/Btn';
-import ShadowCard from '../../components/common/ShadowCard';
-import BtnOutline from '../../components/buttons/BtnOutline';
+import TextInput from '../components/inputs/TextInput';
+import SelectInput from '../components/inputs/SelectInput';
+import Btn from '../components/buttons/Btn';
+import ShadowCard from '../components/common/ShadowCard';
+import BtnOutline from '../components/buttons/BtnOutline';
 
-import { fetchAllExercises } from '../../services/exercise/exerciseAction';
-import { createWorkoutPlan } from '../../services/workoutplans/workoutplansAction';
+import { fetchAllExercises } from '../services/exercise/exerciseAction';
+import { createWorkoutPlan } from '../services/workoutplans/workoutplansAction';
 // import { createUserWorkoutPlan } from '../../services/userworkoutplans/userWorkoutPlansAction';
 
 // ✅ Validation Schema - Updated to match model
@@ -78,7 +78,7 @@ const CreateUserWorkoutPlanForm = () => {
   };
 
   return (
-    <div>
+    <div className='w-full'>
       <h1 className="text-2xl font-bold mb-4">Create User Workout Plan</h1>
       <Formik
         initialValues={{

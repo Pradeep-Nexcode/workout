@@ -4,15 +4,19 @@ import apolloClient from "../apolloClient";
 
 export const fetchAllExercises = createAsyncThunk(
   "exercise/fetchAll",
-  async ({ page = 1, limit = 10 }, { rejectWithValue }) => {
+  async ({ page = 1, limit = 10 } = {}, { rejectWithValue }) => {
+    console.log("🚀 fetchAllExercises triggered", page, limit); // ✅ See if this logs
     try {
       const response = await apolloClient.query({
         query: exerciseQueries.GET_ALL_EXERCISES,
         variables: { page, limit },
         fetchPolicy: "no-cache",
       });
-      return response.data.getAllExercises;
+
+      console.log("✅ GraphQL Response", response);
+      return response.data.getAllExercises.data;
     } catch (err) {
+      console.error("❌ GraphQL Error", err);
       return rejectWithValue(err.message || "Failed to fetch exercises");
     }
   }
