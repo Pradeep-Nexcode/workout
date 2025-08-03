@@ -20,7 +20,7 @@ export const config = {
 
   // MongoDB Configuration
   mongodb: {
-    uri: process.env.MONGODB_URI || "mongodb://localhost:27017/workout",
+    uri: process.env.MONGODB_URI || "mongodb+srv://pradeepnexcode:cOBoJTLSSAy9raHE@workoutcluster.h3ti3xp.mongodb.net/?retryWrites=true&w=majority&appName=workoutcluster",
   },
 
   // JWT Configuration
