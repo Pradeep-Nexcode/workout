@@ -9,14 +9,14 @@ const exerciseTypeDefs = `#graphql
 
   type Exercise {
     _id: ID!
-    name: String!
-    slug: String!
+    name: String
+    slug: String
     category: Category
     type: String!
-    primaryMuscles: [String!]
-    equipment: [String!]
-    instructions: [String!]!
-    difficulty: String!
+    primaryMuscles: [String]
+    equipment: [String]
+    instructions: [String]
+    difficulty: String
     image: ExerciseImage
     images: [ExerciseImage]
     videoUrl: String
@@ -24,6 +24,13 @@ const exerciseTypeDefs = `#graphql
     isActive: Boolean
     createdAt: String
     updatedAt: String
+  }
+
+  type ExercisePagination {
+    exercises: [Exercise]
+    total: Int
+    page: Int
+    totalPages: Int
   }
 
   input ExerciseImageInput {
@@ -70,6 +77,12 @@ const exerciseTypeDefs = `#graphql
     data: Exercise
   }
 
+  type ExercisesPaginationResponse {
+    success: Boolean
+    message: String
+    data: ExercisePagination
+  }
+
   type ExercisesResponse {
     success: Boolean!
     message: String!
@@ -77,9 +90,10 @@ const exerciseTypeDefs = `#graphql
   }
 
   type Query {
-    getAllExercises: ExercisesResponse!
+    # With pagination + optional filters
+    getAllExercises(page: Int, limit: Int, search: String, categoryId: ID): ExercisesPaginationResponse
     getExerciseById(id: ID!): ExerciseResponse
-    getExercisesByCategory(categoryId: ID!): ExercisesResponse
+    getExercisesByCategory(categoryId: ID!, page: Int, limit: Int): ExercisesPaginationResponse!
   }
 
   type Mutation {

@@ -2,29 +2,33 @@ import { gql } from "@apollo/client";
 
 export const exerciseQueries = {
   GET_ALL_EXERCISES: gql`
-    query GetAllExercises {
-      getAllExercises {
+    query GetAllExercises($page: Int, $limit: Int) {
+      getAllExercises(page: $page, limit: $limit) {
         success
         message
         data {
-          _id
-          name
-          slug
-          category {
+          totalPages
+          page
+          total
+          exercises {
             _id
             name
+            slug
+            category {
+              name
+            }
+            type
+            primaryMuscles
+            equipment
+            instructions
+            difficulty
+
+            videoUrl
+            isFeatured
+            isActive
+            createdAt
+            updatedAt
           }
-          type
-          primaryMuscles
-          equipment
-          instructions
-          difficulty
-          
-          videoUrl
-          isFeatured
-          isActive
-          createdAt
-          updatedAt
         }
       }
     }

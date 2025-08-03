@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
-const userWorkoutPlanSchema = new mongoose.Schema(
+const workoutPlanSchema = new mongoose.Schema(
   {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    date: { type: Date, required: true }, // e.g., 2025-07-23
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: false },
+    date: { type: Date, required: false }, // e.g., 2025-07-23
     targetMuscles: [{ type: String }], // optional tagging
 
     exercises: [
@@ -30,4 +30,4 @@ const userWorkoutPlanSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model("UserWorkoutPlan", userWorkoutPlanSchema);
+export default mongoose.model("WorkoutPlan", workoutPlanSchema);

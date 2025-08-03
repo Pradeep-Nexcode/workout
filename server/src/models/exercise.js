@@ -16,6 +16,7 @@ const exerciseSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
       required: true,
+      index: true, // quick lookup
     },
     type: {
       type: String,
@@ -23,15 +24,15 @@ const exerciseSchema = new mongoose.Schema(
       required: true,
     },
     primaryMuscles: {
-      type: [String], // e.g., ["Chest", "Triceps"]
+      type: [String], 
       required: true,
     },
     equipment: {
-      type: [String], // e.g., ["Barbell", "Bench"]
+      type: [String], 
       required: true,
     },
     instructions: {
-      type: [String], // step-by-step guide
+      type: [String], 
       required: true,
     },
     difficulty: {
@@ -40,19 +41,19 @@ const exerciseSchema = new mongoose.Schema(
       default: "Beginner",
     },
     image: {
-      url: { type: String, required: false }, // CDN or uploaded
+      url: { type: String },
       altText: { type: String, default: "" },
-      file: { type: String, required: false }, // file name if stored
+      file: { type: String },
     },
     images: [
       {
-        url: { type: String, required: false }, // CDN or uploaded
+        url: { type: String },
         altText: { type: String, default: "" },
-        file: { type: String, required: false },
+        file: { type: String },
       },
     ],
     videoUrl: {
-      type: String, // Optional: YouTube/Vimeo/CDN video
+      type: String,
     },
     isFeatured: {
       type: Boolean,
@@ -61,11 +62,19 @@ const exerciseSchema = new mongoose.Schema(
     isActive: {
       type: Boolean,
       default: true,
+      index: true, // for active filtering
     },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
+
+// ✅ Text index for search
+exerciseSchema.index({ name: "text", primaryMuscles: "text" });
+
+// ✅ Category index for filtering
+exerciseSchema.index({ category: 1 });
+
+// ✅ CreatedAt index for pagination/sorting
+exerciseSchema.index({ createdAt: -1 });
 
 export default mongoose.model("Exercise", exerciseSchema);

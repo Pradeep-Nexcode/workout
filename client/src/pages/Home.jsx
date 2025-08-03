@@ -3,15 +3,21 @@ import { Link } from "react-router-dom";
 import SearchInput from "../components/common/SearchInput";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategories } from "../services/category/CategoryAction";
+import { fetchAllWorkoutPlans } from "../services/workoutplans/workoutplansAction";
 
 const Home = () => {
   const { categories } = useSelector((state) => state.category);
+  const { workoutPlans } = useSelector((state) => state.workoutplan);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchCategories());
   }, []);
 
+
+  useEffect(() => {
+    dispatch(fetchAllWorkoutPlans());
+  }, []);
   return (
     <div className="p-6 md:p-10 space-y-10 text-white">
       {/* Banner */}
@@ -53,6 +59,38 @@ const Home = () => {
           ))}
         </div>
       </div>
+
+
+      {/* Workout Plans */}
+      <div>
+        <h2 className="text-2xl font-semibold mb-4">Workout Plans</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {/* Display workout plans */}
+          {workoutPlans.map((plan) => (
+            <Link to={`/workoutplan/${plan._id}`} key={plan._id} className="bg-card p-5 rounded-lg border border-transparent hover:border-accent transition-shadow hover:shadow-lg">
+
+              <div>
+                {plan.targetMuscles.map((muscle, index) => (
+                  <span key={index} className="text-muted text-sm mr-2">
+                    {muscle}
+                  </span>
+                ))}
+              </div>
+
+              <div>
+                {plan.exercises.map((exercise, index) => (
+                  <span key={index} className="text-muted text-sm mr-2">
+                    {exercise.exerciseId}
+                  </span>
+                ))}
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+
+
+
     </div>
   );
 };

@@ -169,8 +169,8 @@ const Sidebar = ({ isCollapsed }) => {
   const isMenuOpen = (id) => openMenus.has(id);
 
   const renderSubMenu = (subItems) => {
-    return subItems.map((subItem) => (
-      <div key={subItem?._id}>
+    return subItems.map((subItem,i) => (
+      <div key={i}>
         <div
           className={`py-[5px] px-2 text-sm flex items-center justify-between w-full space-x-2 cursor-pointer ${isItemActive(subItem?.id)
             ? "bg-gray-200 text-black dark:bg-gray-700 dark:text-white rounded-md"
@@ -240,9 +240,9 @@ const Sidebar = ({ isCollapsed }) => {
           MENU
         </p>
 
-        {items?.map((item) => (
+        {items?.map((item, index) => (
           <div
-            key={item?._id}
+            key={index}
             className="w-full"
             onMouseEnter={() => isCollapsed && setHoveredMenu(item?.id)}
           >
