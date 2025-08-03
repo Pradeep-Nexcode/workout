@@ -37,6 +37,7 @@ export const config = {
           "http://localhost:5173",
           "https://studio.apollographql.com",
           "http://localhost:3000",
+          "https://workout-three-mauve.vercel.app"
         ],
   },
 
