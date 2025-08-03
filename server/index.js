@@ -11,7 +11,7 @@ import graphqlUploadExpress from "graphql-upload/graphqlUploadExpress.mjs";
 import { config } from "./src/config/index.js";
 // import auth from "./src/restapi/routes/auth.js";``
 import mime from "mime";
-import serverless from "serverless-http";
+// import serverless from "serverless-http";
 // MongoDB connection
 const connectDatabase = async (URI) => {
   try {
@@ -110,7 +110,7 @@ apolloServer.applyMiddleware({ app, cors: false }); // Disable Apollo's CORS han
 console.log('test')
 
 // ✅ Export for Vercel
-export const handler = serverless(app);
+// export const handler = serverless(app);
 // Start server
 httpServer.listen(config.port, () => {
   console.log(
