@@ -3,7 +3,7 @@ import { setContext } from "@apollo/client/link/context";
 import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
 
 const uploadLink = createUploadLink({
-  uri: "http://localhost:3004/graphql",
+  uri: "https://workout-api-psi.vercel.app/graphql",
   credentials: "include",
   headers: {
     "Apollo-Require-Preflight": "true",
