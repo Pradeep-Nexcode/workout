@@ -93,7 +93,7 @@ const exerciseTypeDefs = `#graphql
     # With pagination + optional filters
     getAllExercises(page: Int, limit: Int, search: String, categoryId: ID): ExercisesPaginationResponse
     getExerciseById(id: ID!): ExerciseResponse
-    getExercisesByCategory(categoryId: ID!, page: Int, limit: Int): ExercisesPaginationResponse!
+    getExercisesByCategory(categoryId: ID, page: Int, limit: Int): ExercisesPaginationResponse
   }
 
   type Mutation {

@@ -4,7 +4,6 @@ import RootLayout from '../RootLayout';
 import Category from "../pages/category/Category";
 import Exercises from "../pages/exercise/Exercises";
 import WorkoutPlans from "../pages/workoutPlan/WorkoutPlans";
-import TestAnimation from "../components/TestAnimation";
 import Exercise from "../pages/exercise/Exercise";
 import WorkoutPlan from "../pages/workoutPlan/WorkoutPlan";
 
@@ -16,7 +15,7 @@ const routes = createBrowserRouter([
       {
         index: true,
         element:
-          <TestAnimation />
+          <h1>Workout Manager</h1>
         ,
       },
       {

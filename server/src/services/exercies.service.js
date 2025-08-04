@@ -64,12 +64,30 @@ export const getExerciseByIdService = async (id) => {
   return data;
 };
 
-export const getExercisesByCategoryService = async (categoryId) => {
-  console.log("categoryId", categoryId, "");
-  const exercises = await Exercise.find({
-    category: categoryId,
-  }).populate("category", "name slug"); // Optional
-  return exercises;
+export const getExercisesByCategoryService = async (
+  categoryId,
+  page,
+  limit
+) => {
+  console.log('ghjk')
+
+  const data = await Exercise.find({ category: categoryId })
+    .populate("category")
+    .sort({ createdAt: -1 }) // Latest first
+    .skip((page - 1) * limit)
+    .limit(limit);
+
+  console.log(data);
+
+  return {
+    data,
+    pagination: {
+      total: data.length,
+      page,
+      totalPages: Math.ceil(data.length / limit),
+      limit,
+    },
+  };
 };
 
 export const createExerciseService = async (input, req) => {

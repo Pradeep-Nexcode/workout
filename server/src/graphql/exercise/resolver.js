@@ -45,10 +45,23 @@ const exerciseResolvers = {
       return successResponse("Exercise fetched successfully", data);
     }),
 
-    getExercisesByCategory: tryCatch(async (_, { categoryId }) => {
-      const data = await getExercisesByCategoryService(categoryId);
+    getExercisesByCategory: tryCatch(async (_, args) => {
+      const { page, limit, categoryId } = args;
+      console.log(args);
+      if (!categoryId) throw new Error("Category ID is required.");
 
-      return successResponse("Exercises fetched successfully", data);
+      const { data , pagination} = await getExercisesByCategoryService(categoryId, page, limit);
+
+      return {
+        success: true,
+        message: "Exercises fetched successfully",
+        data: {
+          exercises: data, // The list of exercises
+          total: pagination.total, // Total count
+          page: pagination.page, // Current page
+          totalPages: pagination.totalPages, // Total pages
+        },
+      };
     }),
   },
 

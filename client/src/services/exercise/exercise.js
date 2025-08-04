@@ -13,6 +13,21 @@ export const exerciseQueries = {
           exercises {
             _id
             name
+            slug
+            category {
+              name
+            }
+            type
+            primaryMuscles
+            equipment
+            instructions
+            difficulty
+
+            videoUrl
+            isFeatured
+            isActive
+            createdAt
+            updatedAt
           }
         }
       }
@@ -56,27 +71,34 @@ export const exerciseQueries = {
   `,
 
   GET_EXERCISE_BY_CATEGORY: gql`
-    query getExercisesByCategory($categoryId: ID!) {
-      getExercisesByCategory(categoryId: $categoryId) {
+    query getExercisesByCategory($categoryId: ID, $page: Int, $limit: Int) {
+      getExercisesByCategory(
+        categoryId: $categoryId
+        page: $page
+        limit: $limit
+      ) {
         success
         message
         data {
-          _id
-          name
-          slug
-          category {
+          total
+          exercises {
             _id
             name
-          }
-          type
-          primaryMuscles
-          equipment
-          instructions
-          difficulty
+            slug
+            category {
+              _id
+              name
+            }
+            type
+            primaryMuscles
+            equipment
+            instructions
+            difficulty
 
-          videoUrl
-          isFeatured
-          isActive
+            videoUrl
+            isFeatured
+            isActive
+          }
         }
       }
     }
