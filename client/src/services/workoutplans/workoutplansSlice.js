@@ -5,6 +5,7 @@ import {
   createWorkoutPlan,
   updateWorkoutPlan,
   deleteWorkoutPlan,
+  completeWorkoutPlan,
 } from "./workoutplansAction";
 
 const initialState = {
@@ -70,6 +71,18 @@ const workoutPlanSlice = createSlice({
         state.loading = false;
       })
       .addCase(updateWorkoutPlan.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      //complete
+      .addCase(completeWorkoutPlan.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(completeWorkoutPlan.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(completeWorkoutPlan.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

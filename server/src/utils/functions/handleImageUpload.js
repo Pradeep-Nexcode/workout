@@ -33,3 +33,12 @@ const handleImageUpload = async (file, uploadDir, baseUrl, folder) => {
 };
 
 export default handleImageUpload;
+
+
+// export const deleteCloudinaryImage = async (publicId) => {
+//   try {
+//     await cloudinary.uploader.destroy(publicId);
+//   } catch (error) {
+//     console.error("Cloudinary delete error:", error);
+//   }
+// };

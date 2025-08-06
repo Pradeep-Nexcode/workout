@@ -57,13 +57,25 @@ export const workoutPlanQueries = {
 
   // ✏️ Update a workout plan (template)
   UPDATE_WORKOUT_PLAN: gql`
-    mutation UpdateWorkoutPlan($id: ID!, $input: UpdateWorkoutPlanInput!) {
-      updateWorkoutPlan(id: $id, input: $input) {
+    mutation UpdateWorkoutPlan($id: ID, $exerciseId: ID) {
+      updateWorkoutPlan(id: $id, exerciseId: $exerciseId) {
+        success
+        message
+      }
+    }
+  `,
+
+  // completeWorkoutPlan
+  COMPLETE_WORKOUT_PLAN: gql`
+    mutation CompleteWorkoutPlan($id: ID!) {
+      completeWorkoutPlan(id: $id) {
         success
         message
         data {
           _id
-          name
+          date
+          completedAt
+          status
         }
       }
     }
@@ -137,17 +149,6 @@ export const workoutPlanQueries = {
           completed
         }
         status
-      }
-    }
-  `,
-
-  // ✅ Mark workout as completed
-  COMPLETE_WORKOUT_PLAN: gql`
-    mutation CompleteWorkoutPlan($id: ID!) {
-      completeWorkoutPlan(id: $id) {
-        _id
-        status
-        completedAt
       }
     }
   `,

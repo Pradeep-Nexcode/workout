@@ -10,17 +10,17 @@ const workoutPlanTypeDefs = `#graphql
     _id: ID
   }
 
-  type UserWorkoutPlan {
-    _id: ID
-    user: ID
-    date: String
-    targetMuscles: [String]
-    exercises: [WorkoutExercise]
-    status: String
-    completedAt: String
-    createdAt: String
-    updatedAt: String
-  }
+type UserWorkoutPlan {
+  _id: ID
+  user: ID
+  date: String
+  targetMuscles: [String]
+  exercises: [WorkoutExercise]
+  status: String
+  completedAt: String
+  createdAt: String
+  updatedAt: String
+}
 
   input WorkoutExerciseInput {
     exerciseId: ID
@@ -61,8 +61,8 @@ const workoutPlanTypeDefs = `#graphql
 
   type Mutation {
     createWorkoutPlan(input: CreateUserWorkoutPlanInput): WorkoutPlanResponse
-    completeWorkoutPlan(id: ID!): UserWorkoutPlan!
-    updateWorkoutProgress(id: ID!, exerciseId: ID!): UserWorkoutPlan!
+    completeWorkoutPlan(id: ID!): WorkoutPlanResponse
+    updateWorkoutPlan(id: ID, exerciseId: ID): WorkoutPlanResponse
   }
 
 `;

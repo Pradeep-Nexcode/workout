@@ -107,11 +107,7 @@ const apolloServer = new ApolloServer({
 await apolloServer.start();
 apolloServer.applyMiddleware({ app, cors: false }); // Disable Apollo's CORS handling
 
-console.log('test')
-
-// ✅ Export for Vercel
-// export const handler = serverless(app);
-// Start server
+ 
 httpServer.listen(config.port, () => {
   console.log(
     `Server running in ${config.nodeEnv} mode on port ${config.port}`

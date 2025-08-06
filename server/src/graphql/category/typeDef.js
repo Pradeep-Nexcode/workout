@@ -4,7 +4,6 @@ const categoryTypeDefs = `
 
   type CategoryImage {
     url: String
-    file: String
     altText: String
     type: String
   }
@@ -33,6 +32,7 @@ const categoryTypeDefs = `
     description: String
     isActive: Boolean
     images: [CategoryImageInput]
+
   }
 
   input UpdateCategoryInput {

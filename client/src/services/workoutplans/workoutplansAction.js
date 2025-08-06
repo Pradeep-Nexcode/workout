@@ -54,11 +54,13 @@ export const createWorkoutPlan = createAsyncThunk(
 // Update
 export const updateWorkoutPlan = createAsyncThunk(
   "workoutPlan/update",
-  async ({ id, input }, { rejectWithValue }) => {
+  async ({ id, exerciseId }, { rejectWithValue }) => {
+
+    console.log(id, exerciseId)
     try {
       const { data } = await apolloClient.mutate({
         mutation: workoutPlanQueries.UPDATE_WORKOUT_PLAN,
-        variables: { id, input },
+        variables: { id, exerciseId },
       });
       return data.updateWorkoutPlan.data;
     } catch (err) {
@@ -66,6 +68,23 @@ export const updateWorkoutPlan = createAsyncThunk(
     }
   }
 );
+
+// completed 
+export const completeWorkoutPlan = createAsyncThunk(
+  "workoutPlan/complete",
+  async (id, { rejectWithValue }) => {
+    
+    try {
+      const { data } = await apolloClient.mutate({
+        mutation: workoutPlanQueries.COMPLETE_WORKOUT_PLAN,
+        variables: { id },
+      });
+      return data.completeWorkoutPlan.data;
+    } catch (err) {
+      return rejectWithValue(err.message || "Failed to complete workout plan");
+    }
+  }
+)
 
 // Delete
 export const deleteWorkoutPlan = createAsyncThunk(

@@ -235,7 +235,7 @@ const Exercise = () => {
                   title="Main Exercise Image"
                   value={values.image}
                   onChange={(val) => setFieldValue("image", val)}
-                  maxSize={1024 * 1024 * 3} // 2MB limit
+                  maxSize={1024 * 1024 * 5} // 2MB limit
                 />
 
                 <MultipleImageInput
@@ -244,7 +244,7 @@ const Exercise = () => {
                   value={values.images}
                   onChange={(val) => setFieldValue("images", val)}
                   maxImages={5}
-                  maxSize={1024 * 1024 * 3} // 2MB per image
+                  maxSize={1024 * 1024 * 5} // 2MB per image
                 />
 
                 <div className="flex justify-end space-x-4 pt-4">

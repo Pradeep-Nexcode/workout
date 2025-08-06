@@ -13,14 +13,15 @@ export const createWorkoutPlanService = async (input) => {
 };
 
 export const completeWorkoutPlanService = async (id) => {
-  return await workoutPlan.findByIdAndUpdate(
+  const data = await workoutPlan.findByIdAndUpdate(
     id,
-    {
-      status: "Completed",
-      completedAt: new Date(),
-    },
+    { status: "Completed", completedAt: new Date() },
     { new: true }
   );
+
+  console.log(data, 'daa')
+  if (!data) throw new Error("Workout Plan not found");
+  return data;
 };
 
 export const updateWorkoutProgressService = async (planId, exerciseId) => {

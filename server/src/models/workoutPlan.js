@@ -2,7 +2,11 @@ import mongoose from "mongoose";
 
 const workoutPlanSchema = new mongoose.Schema(
   {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: false },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: false,
+    },
     date: { type: Date, required: false }, // e.g., 2025-07-23
     targetMuscles: [{ type: String }], // optional tagging
 
@@ -11,7 +15,6 @@ const workoutPlanSchema = new mongoose.Schema(
         exerciseId: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Exercise",
-          required: true,
         },
         sets: Number,
         reps: String,

@@ -5,7 +5,6 @@ const exerciseSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
-      unique: true,
     },
     slug: {
       type: String,
@@ -68,9 +67,7 @@ const exerciseSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// ✅ Text index for search
-exerciseSchema.index({ name: "text", primaryMuscles: "text" });
-
+ 
 // ✅ Category index for filtering
 exerciseSchema.index({ category: 1 });
 

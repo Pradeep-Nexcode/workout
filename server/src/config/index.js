@@ -11,16 +11,17 @@ const envFile =
   process.env.NODE_ENV === "production"
     ? ".env.production"
     : ".env.development";
-dotenv.config({ path: path.join(__dirname, "../../", envFile) });
+
+dotenv.config({ path: path.join(__dirname, "../", envFile) });
 
 export const config = {
   // Server Configuration
   port: process.env.PORT || 3004,
-  nodeEnv: process.env.NODE_ENV || "development",
+  nodeEnv: process.env.NODE_ENV,
 
   // MongoDB Configuration
   mongodb: {
-    uri: process.env.MONGODB_URI  ||  "mongodb+srv://pradeepnexcode:cOBoJTLSSAy9raHE@workoutcluster.h3ti3xp.mongodb.net/?retryWrites=true&w=majority&appName=workoutcluster",
+    uri: process.env.MONGODB_URI,
   },
 
   // JWT Configuration

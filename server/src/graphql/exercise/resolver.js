@@ -47,7 +47,6 @@ const exerciseResolvers = {
 
     getExercisesByCategory: tryCatch(async (_, args) => {
       const { page, limit, categoryId } = args;
-      console.log(args);
       if (!categoryId) throw new Error("Category ID is required.");
 
       const { data , pagination} = await getExercisesByCategoryService(categoryId, page, limit);
@@ -67,7 +66,6 @@ const exerciseResolvers = {
 
   Mutation: {
     createExercise: tryCatch(async (_, { input }, context) => {
-      console.log(input, "input");
       const data = await createExerciseService(input, context.req);
       return successResponse("Exercise created successfully", data);
     }),

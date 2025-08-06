@@ -28,7 +28,6 @@ export const categoryQueries = {
           isActive
           images {
             url
-            file
             altText
             type
           }
@@ -74,7 +73,6 @@ export const categoryQueries = {
           isActive
           images {
             url
-            file
             altText
             type
           }

@@ -22,7 +22,6 @@ const userWorkoutPlanResolvers = {
       const data = await getWorkoutPlansService(
         new Date().toISOString().split("T")[0]
       );
-      console.log(data, "data");
       return {
         success: true,
         message: "Today's workout plan fetched successfully",
@@ -39,16 +38,24 @@ const userWorkoutPlanResolvers = {
   Mutation: {
     createWorkoutPlan: tryCatch(async (_, { input }, context) => {
       const data = await createWorkoutPlanService(input);
-      console.log(data, "createWorkoutPlan");
       return successResponse("Workout plan created successfully", data);
     }),
 
     completeWorkoutPlan: tryCatch(async (_, { id }) => {
-      return await completeWorkoutPlanService(id);
+
+      console.log('ghjk')
+      const data = await completeWorkoutPlanService(id);
+      // return successResponse("Workout plan completed successfully", data);
+      return  {
+        success: true,
+        message: "Workout plan completed successfully",
+        data
+      }
     }),
 
-    updateWorkoutProgress: tryCatch(async (_, { id, exerciseId }) => {
-      return await updateWorkoutProgressService(id, exerciseId);
+    updateWorkoutPlan: tryCatch(async (_, { id, exerciseId }) => {
+      const data = await updateWorkoutProgressService(id, exerciseId);
+      return successResponse("Workout plan updated successfully", data);
     }),
   },
 };

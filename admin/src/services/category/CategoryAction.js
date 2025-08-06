@@ -62,6 +62,7 @@ export const updateCategory = createAsyncThunk(
   "category/updateCategory",
   async ({ id, updatedData }, { rejectWithValue }) => {
     try {
+      console.log("Updating category with:", id, updatedData);
       const { data } = await apolloClient.mutate({
         mutation: categoryQueries.UPDATE_CATEGORY,
         variables: { id, input: updatedData },

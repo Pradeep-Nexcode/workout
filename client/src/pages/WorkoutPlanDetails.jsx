@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import Btn from "../components/buttons/Btn";
 import ShadowCard from "../components/common/ShadowCard";
-import { fetchWorkoutPlanById ,updateWorkoutPlan} from "../services/workoutplans/workoutplansAction";
+import { completeWorkoutPlan, fetchWorkoutPlanById, updateWorkoutPlan } from "../services/workoutplans/workoutplansAction";
 
 const WorkoutPlanDetails = () => {
   const { id } = useParams(); // Plan ID from URL
@@ -22,13 +22,7 @@ const WorkoutPlanDetails = () => {
     dispatch(
       updateWorkoutPlan({
         id: workoutPlan._id,
-        updates: {
-          exercises: workoutPlan.exercises.map((ex) =>
-            ex.exerciseId._id === exerciseId
-              ? { ...ex, completed: true }
-              : ex
-          ),
-        },
+        exerciseId: exerciseId
       })
     );
   };
@@ -36,10 +30,9 @@ const WorkoutPlanDetails = () => {
   // Mark whole workout completed
   const handleCompleteWorkout = () => {
     dispatch(
-      updateWorkoutPlan({
-        id: workoutPlan._id,
-        updates: { status: "Completed", completedAt: new Date() },
-      })
+      completeWorkoutPlan(
+        workoutPlan._id,
+      )
     );
     navigate("/"); // Redirect after complete
   };
@@ -79,7 +72,7 @@ const WorkoutPlanDetails = () => {
                   <p>Status: {exercise.completed ? "✅ Completed" : "⏳ Pending"}</p>
                 </div>
                 {!exercise.completed && (
-                  <Btn onClick={() => handleExerciseComplete(exercise.exerciseId._id)}>
+                  <Btn onClick={() => handleExerciseComplete(exercise.exerciseId)}>
                     Mark Complete
                   </Btn>
                 )}

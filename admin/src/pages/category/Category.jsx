@@ -34,8 +34,8 @@ const Category = () => {
       dispatch(fetchCategoryById(id));
     }
     // clear form data if create mode
-    
- 
+
+
     console.log(category, 'category');
 
     return () => {
@@ -51,51 +51,51 @@ const Category = () => {
     slug: category?.slug || '',
   };
 
- const handleSubmit = async (values) => {
-  try {
-    const slug = values.slug || values.name.toLowerCase().replace(/\s+/g, '-');
+  const handleSubmit = async (values) => {
+    try {
+      const slug = values.slug || values.name.toLowerCase().replace(/\s+/g, '-');
 
-    const images = values.images.map((image) => {
-      if (typeof image === 'string') {
-        return {
-          url: image,
-          altText: 'Category Banner',
-          file: null,
-        };
-      } else if (image?.url && typeof image.url === 'string') {
-        return {
-          url: image.url,
-          altText: image.altText || 'Category Banner',
-          file: null,
-        };
+      const images = values.images.map((image) => {
+        if (typeof image === 'string') {
+          return {
+            url: image,
+            altText: 'Category Banner',
+            file: null,
+          };
+        } else if (image?.url && typeof image.url === 'string') {
+          return {
+            url: image.url,
+            altText: image.altText || 'Category Banner',
+            file: null,
+          };
+        } else {
+          return {
+            url: '',
+            altText: 'Category Banner',
+            ...image,
+          };
+        }
+      });
+
+      const input = {
+        name: values.name,
+        description: values.description,
+        slug,
+        isActive: true,
+        images,
+      };
+
+      if (isEditMode) {
+        await dispatch(updateCategory({ id, updatedData: input }));
       } else {
-        return {
-          url: '',
-          altText: 'Category Banner',
-          file: image,
-        };
+        await dispatch(createCategory(input));
       }
-    });
 
-    const input = {
-      name: values.name,
-      description: values.description,
-      slug,
-      isActive: true,
-      images,
-    };
-
-    if (isEditMode) {
-      await dispatch(updateCategory({ id, updatedData: input }));
-    } else {
-      await dispatch(createCategory(input));
+      // navigate('/categories');
+    } catch (err) {
+      console.error('Error saving category:', err);
     }
-
-    navigate('/categories');
-  } catch (err) {
-    console.error('Error saving category:', err);
-  }
-};
+  };
 
 
 
